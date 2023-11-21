@@ -1,72 +1,43 @@
-# Project #10 - Argent Bank API
+# Argent Bank Full Stack Application
 
-This codebase contains the code needed to run the backend for Argent Bank.
+## Overview
+
+This repository holds the full-stack application for Argent Bank, a fictional banking platform. It includes both the back-end API and the front-end interface built with React.
+
+## Project Structure
+
+- `/back`: Contains the Node.js backend application, connecting to MongoDB Atlas.
+- `/front`: Contains the React front-end application.
+
+## Back-End Setup
+
+Refer to the README in the `back` directory for instructions on setting up and running the back-end part of the project, including environment configuration and database setup.
+
+## Front-End Setup
+
+The front-end application was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). For detailed instructions on available scripts and development setup, refer to the README in the `front` directory.
+
+### Quick Start
+
+Within the `front` directory, you can run several commands:
+
+```bash
+npm start       # Starts the app in development mode at http://localhost:3000
+npm test        # Launches the test runner
+npm run build   # Builds the app for production
+```
 
 ## Getting Started
 
-### Prerequisites
+To get started with the full-stack application:
 
-Argent Bank uses the following tech stack:
+1. Ensure you have Node.js installed for the back-end and a modern browser for the front-end.
+2. Follow the back-end setup instructions in `/back/README.md`.
+3. Follow the front-end setup instructions in `/front/README.md`.
 
-- [Node.js v12](https://nodejs.org/en/)
-- [MongoDB Community Server](https://www.mongodb.com/try/download/community)
+## Contributing
 
-Please make sure you have the right versions and download both packages. You can verify this by using the following commands in your terminal:
+Contributions to the Argent Bank project are welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines on how to contribute.
 
-```bash
-# Check Node.js version
-node --version
 
-# Check Mongo version
-mongo --version
-```
 
-### Instructions
-
-1. Fork this repo
-1. Clone the repo onto your computer
-1. Open a terminal window in the cloned project
-1. Run the following commands:
-
-```bash
-# Install dependencies
-npm install
-
-# Start local dev server
-npm run dev:server
-
-# Populate database with two users
-npm run populate-db
-```
-
-Your server should now be running at http://locahost:3001 and you will now have two users in your MongoDB database!
-
-## Populated Database Data
-
-Once you run the `populate-db` script, you should have two users in your database:
-
-### Tony Stark
-
-- First Name: `Tony`
-- Last Name: `Stark`
-- Email: `tony@stark.com`
-- Password: `password123`
-
-### Steve Rogers
-
-- First Name: `Steve`,
-- Last Name: `Rogers`,
-- Email: `steve@rogers.com`,
-- Password: `password456`
-
-## API Documentation
-
-To learn more about how the API works, once you have started your local environment, you can visit: http://localhost:3001/api-docs
-
-## Design Assets
-
-Static HTML and CSS has been created for most of the site and is located in: `/designs`.
-
-For some of the dynamic features, like toggling user editing, there is a mock-up for it in `/designs/wireframes/edit-user-name.png`.
-
-And for the API model that you will be proposing for transactitons, the wireframe can be found in `/designs/wireframes/transactions.png`.
