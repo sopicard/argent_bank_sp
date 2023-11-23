@@ -70,8 +70,8 @@ html {
     width: 200px;
   }
   
-  /* .hero {
-    background-image: url('../img/bank-tree.jpeg');
+  .hero {
+    background-image: url('./assets/img/bank-tree.jpeg');
     background-position: 0 -50px;
     background-size: cover;
     background-repeat: no-repeat;
@@ -123,7 +123,7 @@ html {
     }
   }
   
-  .features {
+/*  .features {
     display: flex;
     flex-direction: column;
   }
@@ -201,7 +201,7 @@ html {
     padding: 5px;
     font-size: 1.2rem;
   }
-  
+  */
   .footer {
     display: flex;
     justify-content: center;
@@ -213,7 +213,7 @@ html {
     margin: 0;
     padding: 0;
   }
-  
+  /*
   .account {
     display: flex;
     justify-content: space-between;
