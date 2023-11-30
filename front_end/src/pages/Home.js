@@ -1,8 +1,9 @@
 import React from 'react'
 import HeaderProfile from '../components/HeaderProfile'
 import Footer from '../components/Footer'
+import FeaturesSection from '../components/FeaturesSection'
 // import Hero from './Hero'
-// import Features from './Features'
+
 
 const Home = () => {
   return (
@@ -18,8 +19,7 @@ const Home = () => {
                   <p className="text">Open a savings account with Argent Bank today!</p>
                 </section>
               </div>
-
-              {/* <Features /> */}
+              <FeaturesSection />
             </main>
         <Footer/>
     </div>

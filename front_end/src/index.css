@@ -123,7 +123,7 @@ html {
     }
   }
   
-/*  .features {
+  .features {
     display: flex;
     flex-direction: column;
   }
@@ -153,7 +153,7 @@ html {
     margin-bottom: 0.5rem;
   }
   
-  .sign-in-button {
+  /* .sign-in-button {
     display: block;
     width: 100%;
     padding: 8px;
@@ -200,8 +200,8 @@ html {
   .input-wrapper input {
     padding: 5px;
     font-size: 1.2rem;
-  }
-  */
+  } */
+
   .footer {
     display: flex;
     justify-content: center;
