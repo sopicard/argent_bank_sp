@@ -12,9 +12,10 @@ html {
     flex-direction: column;
     min-height: 100vh;
   }
-  
+
   .main {
     flex: 1;
+    padding: 4rem;
   }
   
   .bg-dark {
@@ -54,6 +55,8 @@ html {
   .main-nav-item {
     text-decoration: none;
     margin-right: 0.5rem;
+    display: flex;
+    gap: 0.2rem;
   }
   
   .main-nav-item:hover {
@@ -153,7 +156,7 @@ html {
     margin-bottom: 0.5rem;
   }
   
-  /* .sign-in-button {
+  .sign-in-button {
     display: block;
     width: 100%;
     padding: 8px;
@@ -170,7 +173,7 @@ html {
     background-color: white;
     width: 300px;
     margin: 0 auto;
-    margin-top: 3rem;
+    /* margin-top: 3rem; */
     padding: 2rem;
   }
   
@@ -200,7 +203,7 @@ html {
   .input-wrapper input {
     padding: 5px;
     font-size: 1.2rem;
-  } */
+  }
 
   .footer {
     display: flex;
@@ -213,7 +216,7 @@ html {
     margin: 0;
     padding: 0;
   }
-  /*
+  
   .account {
     display: flex;
     justify-content: space-between;
@@ -289,4 +292,4 @@ html {
       width: 200px;
     }
   }
-   */
+  
