@@ -13,8 +13,14 @@ html {
     min-height: 100vh;
   }
 
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
   .main {
-    flex: 1;
+    flex-grow: 1;
     padding: 4rem;
   }
   
@@ -56,7 +62,7 @@ html {
     text-decoration: none;
     margin-right: 0.5rem;
     display: flex;
-    gap: 0.2rem;
+    gap: 0.4rem;
   }
   
   .main-nav-item:hover {
@@ -173,7 +179,7 @@ html {
     background-color: white;
     width: 300px;
     margin: 0 auto;
-    /* margin-top: 3rem; */
+    margin-top: 3rem;
     padding: 2rem;
   }
   

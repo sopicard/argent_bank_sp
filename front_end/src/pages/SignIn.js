@@ -1,11 +1,12 @@
 import React from 'react'
-import HeaderProfile from '../components/HeaderProfile'
+import Header from '../components/Header'
+import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 
 const SignIn = () => {
   return (
     <>
-      <HeaderProfile />
+      <Header />
       <main className="main bg-dark">
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
@@ -23,10 +24,7 @@ const SignIn = () => {
               <input type="checkbox" id="remember-me" />
               <label htmlFor="remember-me">Remember me</label>
             </div>
-            {/* Placeholder link for static site */}
-            <a href="./user.html" className="sign-in-button">Sign In</a>
-            {/* Should be the button below */}
-            {/* <button className="sign-in-button">Sign In</button> */}
+            <Link to='/profile' className='sign-in-button'>Sign In</Link>
           </form>
         </section>
       </main>

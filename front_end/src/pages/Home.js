@@ -1,5 +1,5 @@
 import React from 'react'
-import HeaderProfile from '../components/HeaderProfile'
+import Header from '../components/Header'
 import Footer from '../components/Footer'
 import FeaturesSection from '../components/FeaturesSection'
 // import Hero from './Hero'
@@ -8,7 +8,7 @@ import FeaturesSection from '../components/FeaturesSection'
 const Home = () => {
   return (
     <>
-      <HeaderProfile/>
+      <Header/>
       <main>
         <div className="hero">
           <section className="hero-content">
