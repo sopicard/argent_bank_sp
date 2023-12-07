@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/img/argentBankLogo.png'
 
-const HeaderUser = () => {
+const HeaderProfile = () => {
   return (
     <nav className='main-nav'>
       <Link to='/' className='main-nav-logo'>
@@ -14,7 +14,7 @@ const HeaderUser = () => {
         <h1 className='sr-only'>Argent Bank</h1>
       </Link>
       <Link to='/' className='main-nav-item'>
-        <i class="fa fa-user-circle"></i>
+        <i className="fa fa-user-circle"></i>
         Tony
         <i className='fa fa-sign-out'></i>
         Sign Out
@@ -23,4 +23,4 @@ const HeaderUser = () => {
   );
 };
 
-export default HeaderUser;
+export default HeaderProfile;

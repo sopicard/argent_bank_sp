@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/img/argentBankLogo.png'
 
-const HeaderProfile = () => {
+const Header = () => {
   return (
     <nav className='main-nav'>
       <Link to='/' className='main-nav-logo'>
@@ -13,7 +13,7 @@ const HeaderProfile = () => {
         />
         <h1 className='sr-only'>Argent Bank</h1>
       </Link>
-      <Link to='/sign-in' className='main-nav-item'>
+      <Link to='/login' className='main-nav-item'>
         <i className='fa fa-user-circle'></i>
         Sign In
       </Link>
@@ -22,4 +22,4 @@ const HeaderProfile = () => {
   );
 };
 
-export default HeaderProfile;
+export default Header;
