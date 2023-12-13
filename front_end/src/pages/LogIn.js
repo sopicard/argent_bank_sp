@@ -1,15 +1,14 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { loginUser } from '../redux/actions/authActions'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginUser, updateUsername, updatePassword } from '../redux/actions/authActions'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 const LogIn = () => {
-  const dispatch = useDispatch()
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const { username, password } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -39,7 +38,7 @@ const LogIn = () => {
                 type="text"
                 id="username"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => dispatch(updateUsername(e.target.value))}
               />
             </div>
             <div className="input-wrapper">
@@ -48,7 +47,7 @@ const LogIn = () => {
                 type="password"
                 id="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => dispatch(updatePassword(e.target.value))}
               />
             </div>
             <div className="input-remember">

@@ -1,14 +1,54 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import HeaderProfile from '../components/HeaderProfile'
 import Footer from '../components/Footer'
+import { updateUserProfile } from '../redux/actions/authActions'
 
 const Profile = () => {
+  const dispatch = useDispatch()
+  const { token, userData } = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/v1/user/profile', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        })
+
+        if (response.ok) {
+          const data = await response.json()
+
+          // Dispatch l'action pour mettre à jour les données utilisateur dans le store
+          dispatch(updateUserProfile(data.body))
+
+        } else {
+          // Gére les erreurs si nécessaire
+          console.error('Error fetching user profile')
+        }
+      } catch (error) {
+        console.error('Error fetching user profile', error)
+      }
+    };
+
+    if (token) {
+      fetchUserProfile()
+    }
+  }, [token, dispatch])
+
   return (
      <div>
         <HeaderProfile/>
         <main className="main bg-dark">
         <div className="header">
-          <h1>Welcome back<br />Tony Jarvis!</h1>
+          {userData && (
+            <div>
+              <h1>Welcome back {userData.firstName} {userData.lastName}!</h1>
+            </div>
+          )}
           <button className="edit-button">Edit Name</button>
         </div>
         <h2 className="sr-only">Accounts</h2>
