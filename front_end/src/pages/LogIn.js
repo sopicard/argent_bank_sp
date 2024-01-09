@@ -1,29 +1,52 @@
-import React from 'react'
+import  { React, useEffect }from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUser, updateUsername, updatePassword } from '../redux/actions/authActions'
+import { loginUser, updateUsername, updatePassword, updateRememberMe } from '../redux/actions/authActions'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 const LogIn = () => {
-  const dispatch = useDispatch();
-  const { username, password } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
-
+  // Initialisation du dispatch pour les actions Redux et la navigation
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  // Récupération des données du store Redux
+  const { username, password, token, error, rememberMe } = useSelector((state) => state.auth)
+  
+  // Fonction pour gérer la soumission du formulaire de connexion
   const handleSignIn = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
   
     try {
       // Dispatch l'action loginUser avec les données du formulaire
-      await dispatch(loginUser(username, password));
+      await dispatch(loginUser(username, password, rememberMe))
   
-      // Redirige l'utilisateur vers la page de son profil
-      navigate('/profile');
+      // Vérifie si la connexion a réussi avant de rediriger
+      if (!error && token) {
+        // Redirige l'utilisateur vers la page de son profil
+        navigate('/profile')
+      } 
     } catch (error) {
-      console.error('Échec de la connexion.', error);
+      console.error('Une erreur s\'est produite lors de la connexion.', error)
     }
   }
 
+  // Effet qui redirige l'utilisateur vers le profil si le token est présent dans le store au chargement initial
+  useEffect(() => {
+    if (token) {
+      navigate('/profile')
+    }
+  }, [token, navigate])
+
+  
+  // Effet qui nettoie les champs du formulaire en cas d'erreur ou de déconnexion
+  useEffect(() => {
+    if (error || !token) {
+      dispatch(updateUsername(''))
+      dispatch(updatePassword(''))
+    }
+  }, [error, token, dispatch])
+
+  // Rendu JSX du composant
   return (
     <>
       <Header />
@@ -51,11 +74,13 @@ const LogIn = () => {
               />
             </div>
             <div className="input-remember">
-              <input type="checkbox" id="remember-me" />
+              {/* Utilise l'état RememberMe du store Redux pour contrôler la case à cocher */}
+              <input type="checkbox" id="remember-me" checked={rememberMe} onChange={() => dispatch(updateRememberMe(!rememberMe))} />
               <label htmlFor="remember-me">Remember me</label>
             </div>
             <button type="submit" className="sign-in-button">Sign In</button>
           </form>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
         </section>
       </main>
       <Footer />

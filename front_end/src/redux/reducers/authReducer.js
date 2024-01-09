@@ -6,7 +6,8 @@ const initialState = {
   token: null,
   error: null,
   loading: false,
-  userData: null
+  userData: null,
+  rememberMe: false
 }
 
 const authReducer = (state = initialState, action) => {
@@ -23,9 +24,15 @@ const authReducer = (state = initialState, action) => {
       return { ...state, loading: false, error: action.payload.error }
     case types.UPDATE_USER_PROFILE:
       return { ...state, userData: action.payload.userData }
+    case types.UPDATE_REMEMBER_ME:
+      return { ...state, rememberMe: action.payload.rememberMe }
+    case types.LOGOUT:
+      return { ...state, token: null, userData: null, rememberMe: false}  
+    case types.UPDATE_TOKEN:
+      return { ...state, token: action.payload.token }  
     default:
-      return state
+      return state   
   }
-};
+}
 
 export default authReducer
