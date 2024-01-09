@@ -1,20 +1,20 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { logoutUser } from '../redux/actions/authActions';
-import logo from '../assets/img/argentBankLogo.png';
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { logoutUser } from '../redux/actions/authActions'
+import logo from '../assets/img/argentBankLogo.png'
 
 const HeaderProfile = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const userData = useSelector((state) => state.auth.userData);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const userData = useSelector((state) => state.auth.userData)
 
   const handleLogout = () => {
     // Dispatch l'action de déconnexion pour mettre à jour le state Redux
-    dispatch(logoutUser());
+    dispatch(logoutUser())
 
     // Redirige l'utilisateur vers la page de connexion après la déconnexion
-    navigate('/login');
+    navigate('/login')
   };
 
   return (
@@ -30,12 +30,6 @@ const HeaderProfile = () => {
       <button
         className='main-nav-item'
         onClick={handleLogout}
-        style={{
-          border: 'none',
-          background: 'none',
-          cursor: 'pointer',
-          color: 'inherit',
-        }}
       >
         <i className="fa fa-user-circle"></i>
         {userData && userData.firstName} 

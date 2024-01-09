@@ -63,6 +63,9 @@ html {
     margin-right: 0.5rem;
     display: flex;
     gap: 0.4rem;
+    font-weight: bold;
+    border: none;
+    background-color: white;
   }
   
   .main-nav-item:hover {
@@ -260,17 +263,74 @@ html {
     flex: 1;
   }
   
-  .edit-button {
+  .editName-button {
     border-color: #00bc77;
     background-color: #00bc77;
     color: #fff;
     font-weight: bold;
     padding: 10px;
   }
-  
+ 
   .header {
     color: #fff;
     margin-bottom: 2rem;
+  }
+
+  /* EDITING MODE */
+
+  .editing-mode-text {
+    color: black;
+  }  
+  
+  .main.editing-mode {
+    background-color: #dce9f3;
+  }
+
+  .account.editing-mode {
+    border-color: #bec8ee;
+  }
+
+  .transaction-button.editing-mode {
+    background-color: #454cce;
+    border: none;
+    border-radius: 3px;
+  }
+
+  .editing-mode {
+    background-color: #fff;
+  }
+ 
+  .edit-inputs {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .edit-input {
+    padding: 6px;
+    border:1px solid  lightgrey;
+    border-radius: 3px;
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+
+  .edit-input::placeholder {
+    color: lightgrey;
+  }
+
+  .edit-buttons {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-left: 0.5rem;
+  }
+
+  .save-button, .cancel-button {
+    padding: 4px 20px;
+    color: #454cce;
+    border: 1px solid #bec8ee;
+    background-color: white;
+    border-radius: 3px;
   }
   
   .transaction-button {

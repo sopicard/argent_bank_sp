@@ -25,9 +25,7 @@ const authReducer = (state = initialState, action) => {
     case types.UPDATE_USER_PROFILE:
       return { ...state, userData: action.payload.userData }
     case types.UPDATE_REMEMBER_ME:
-      return { ...state, rememberMe: action.payload.rememberMe }
-    case types.LOGOUT:
-      return { ...state, token: null, userData: null, rememberMe: false}  
+      return { ...state, rememberMe: action.payload.rememberMe }  
     case types.UPDATE_TOKEN:
       return { ...state, token: action.payload.token }  
     default:

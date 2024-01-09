@@ -7,7 +7,6 @@ export const updateUsername = (username) => ({ type: types.UPDATE_USERNAME, payl
 export const updatePassword = (password) => ({ type: types.UPDATE_PASSWORD, payload: { password } })
 export const loginSuccess = (token) => ({ type: types.LOGIN_SUCCESS, payload: { token } })
 export const loginFailure = (error) => ({ type: types.LOGIN_FAILURE, payload: { error } })
-export const updateUserProfile = (userData) => ({ type: types.UPDATE_USER_PROFILE, payload: { userData } })
 export const updateToken = (token) => ({ type: types.UPDATE_TOKEN, payload: { token } })
 export const updateRememberMe = (rememberMe) => ({ type: types.UPDATE_REMEMBER_ME, payload: {rememberMe} })
 export const loginUser = (username, password, rememberMe) => async (dispatch) => {
@@ -62,9 +61,43 @@ export const loginUser = (username, password, rememberMe) => async (dispatch) =>
 export const logoutUser = () => (dispatch) => {
   // Supprime le token du localStorage lors de la déconnexion
   localStorage.removeItem('token')
+  localStorage.removeItem('userData')
 
-  // Dispatch l'action de déconnexion pour mettre à jour le state Redux
-  dispatch({
-    type: types.LOGOUT,
-  })
+  dispatch(updateToken(null))
+  dispatch(updateUserProfile(null))
 }
+
+export const updateUserProfile = (updatedUserData) => async (dispatch, getState) => {
+  try {
+    // Utilisez getState() pour accéder à l'état actuel du store Redux
+    const { auth } = getState();
+    const { token } = auth;
+
+    // Vérifiez si le token est présent
+    if (token) {
+      // Mise à jour côté backend
+      const response = await fetch('http://localhost:3001/api/v1/user/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedUserData),
+      });
+
+      if (!response.ok) {
+        console.error('Error updating user profile on the server');
+        // Gérez l'erreur côté frontend si nécessaire
+      }
+    }
+
+    // Mise à jour côté frontend
+    dispatch({
+      type: types.UPDATE_USER_PROFILE,
+      payload: { userData: updatedUserData },
+    });
+  } catch (error) {
+    console.error('Error updating user profile:', error);
+    // Gérez l'erreur côté frontend si nécessaire
+  }
+};
