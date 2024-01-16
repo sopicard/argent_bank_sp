@@ -31,14 +31,14 @@ const HeaderProfile = () => {
         className='main-nav-item'
         onClick={handleLogout}
       >
-        <i className="fa fa-user-circle"></i>
+        <i className='fa fa-user-circle'></i>
         {userData && userData.firstName} 
         <i className='fa fa-sign-out'></i>
         Sign Out
       </button>
     </nav>
-  );
-};
+  )
+}
 
-export default HeaderProfile;
+export default HeaderProfile
 

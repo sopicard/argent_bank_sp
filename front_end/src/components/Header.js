@@ -19,7 +19,7 @@ const Header = () => {
       </Link>
 
     </nav>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

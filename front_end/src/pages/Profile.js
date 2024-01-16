@@ -91,25 +91,25 @@ const Profile = () => {
      <div>
         <HeaderProfile/>
         <main className={`main bg-dark ${isEditing ? 'editing-mode' : ''}`}>
-      <div className="header">
+      <div className='header'>
         {userData && (
-          <div className="edit-inputs">
+          <div className='edit-inputs'>
             <h1 className={isEditing ? 'editing-mode-text' : ''}>
               Welcome back<br />
               {isEditing ? (
                 <>
                   <input
-                    type="text"
+                    type='text'
                     onChange={(e) => setEditedFirstName(e.target.value)}
                     placeholder={editedFirstName}
-                    className="edit-input"
+                    className='edit-input'
                     onFocus={() => setEditedFirstName('')}
                   />
                   <input
-                    type="text"
+                    type='text'
                     onChange={(e) => setEditedLastName(e.target.value)}
                     placeholder={editedLastName}
-                    className="edit-input"
+                    className='edit-input'
                     onFocus={() => setEditedLastName('')}
                   />
                 </>
@@ -122,43 +122,43 @@ const Profile = () => {
           </div>
         )}
         {isEditing ? (
-          <div className="edit-buttons">
-            <button className="save-button" onClick={handleSaveButtonClick}>Save</button>
-            <button className="cancel-button" onClick={handleCancelEdit}>Cancel</button>
+          <div className='edit-buttons'>
+            <button className='save-button' onClick={handleSaveButtonClick}>Save</button>
+            <button className='cancel-button' onClick={handleCancelEdit}>Cancel</button>
           </div>
         ) : (
-          <button className="editName-button" onClick={handleEditButtonClick}>Edit Name</button>
+          <button className='editName-button' onClick={handleEditButtonClick}>Edit Name</button>
         )}
       </div>
 
-        <h2 className="sr-only">Accounts</h2>
+        <h2 className='sr-only'>Accounts</h2>
         <section className={`account ${isEditing ? 'editing-mode' : ''}`}>
-          <div className="account-content-wrapper">
-            <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-            <p className="account-amount">$2,082.79</p>
-            <p className="account-amount-description">Available Balance</p>
+          <div className='account-content-wrapper'>
+            <h3 className='account-title'>Argent Bank Checking (x8349)</h3>
+            <p className='account-amount'>$2,082.79</p>
+            <p className='account-amount-description'>Available Balance</p>
           </div>
-          <div className="account-content-wrapper cta">
+          <div className='account-content-wrapper cta'>
             <button className={`transaction-button ${isEditing ? 'editing-mode' : ''}`}>View transactions</button>
           </div>
         </section>
         <section className={`account ${isEditing ? 'editing-mode' : ''}`}>
-          <div className="account-content-wrapper">
-            <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-            <p className="account-amount">$10,928.42</p>
-            <p className="account-amount-description">Available Balance</p>
+          <div className='account-content-wrapper'>
+            <h3 className='account-title'>Argent Bank Savings (x6712)</h3>
+            <p className='account-amount'>$10,928.42</p>
+            <p className='account-amount-description'>Available Balance</p>
           </div>
-          <div className="account-content-wrapper cta">
+          <div className='account-content-wrapper cta'>
             <button className={`transaction-button ${isEditing ? 'editing-mode' : ''}`}>View transactions</button>
           </div>
         </section>
         <section className={`account ${isEditing ? 'editing-mode' : ''}`}>
-          <div className="account-content-wrapper">
-            <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-            <p className="account-amount">$184.30</p>
-            <p className="account-amount-description">Current Balance</p>
+          <div className='account-content-wrapper'>
+            <h3 className='account-title'>Argent Bank Credit Card (x8349)</h3>
+            <p className='account-amount'>$184.30</p>
+            <p className='account-amount-description'>Current Balance</p>
           </div>
-          <div className="account-content-wrapper cta">
+          <div className='account-content-wrapper cta'>
             <button className={`transaction-button ${isEditing ? 'editing-mode' : ''}`}>View transactions</button>
           </div>
         </section>

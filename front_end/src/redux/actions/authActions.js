@@ -70,8 +70,8 @@ export const logoutUser = () => (dispatch) => {
 export const updateUserProfile = (updatedUserData) => async (dispatch, getState) => {
   try {
     // Utilisez getState() pour accéder à l'état actuel du store Redux
-    const { auth } = getState();
-    const { token } = auth;
+    const { auth } = getState()
+    const { token } = auth
 
     // Vérifiez si le token est présent
     if (token) {
@@ -83,10 +83,10 @@ export const updateUserProfile = (updatedUserData) => async (dispatch, getState)
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(updatedUserData),
-      });
+      })
 
       if (!response.ok) {
-        console.error('Error updating user profile on the server');
+        console.error('Error updating user profile on the server')
         // Gérez l'erreur côté frontend si nécessaire
       }
     }
@@ -95,9 +95,9 @@ export const updateUserProfile = (updatedUserData) => async (dispatch, getState)
     dispatch({
       type: types.UPDATE_USER_PROFILE,
       payload: { userData: updatedUserData },
-    });
+    })
   } catch (error) {
-    console.error('Error updating user profile:', error);
+    console.error('Error updating user profile:', error)
     // Gérez l'erreur côté frontend si nécessaire
   }
 };
