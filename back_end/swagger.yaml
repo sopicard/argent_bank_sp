@@ -70,6 +70,7 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+          type: string
       produces:
         - application/json
       responses:
@@ -93,6 +94,7 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+          type: string
         - in: body
           name: body
           description: Update user profile attributes
@@ -110,6 +112,168 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+  /transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Retrieve all transactions
+      description: Returns all transactions for the authenticated user or a specific account
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: query
+          name: accountId
+          description: Optional account ID to filter transactions
+          required: false
+          type: string
+        - in: query
+          name: orderBy
+          description: Optional order of transactions (e.g., 'desc' for antichronological)
+          required: false
+          type: string
+        - in: query
+          name: startDate
+          description: Optional start date for filtering transactions
+          required: false
+          type: string
+        - in: query
+          name: endDate
+          description: Optional end date for filtering transactions
+          required: false
+          type: string
+        - in: query
+          name: month
+          description: Optional month for filtering transactions
+          required: false
+          type: string
+        - in: query
+          name: label
+          description: Optional label for filtering transactions
+          required: false
+          type: string  
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transactions retrieved successfully
+          schema:
+            $ref: '#/definitions/TransactionsResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error 
+  /transactions/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Get Transaction Details
+      description: Retrieve details of a specific transaction
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: path
+          name: transactionId
+          description: ID of the transaction to retrieve
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction details retrieved successfully
+          schema:
+            $ref: '#/definitions/TransactionDetailsResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error  
+  /user/profile/transactions/checking:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: Get Checking Account Transactions
+      description: Retrieve transactions for the checking account
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Checking account transactions retrieved successfully
+          schema:
+            $ref: '#/definitions/TransactionsResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /user/profile/transactions/savings:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: Get Savings Account Transactions
+      description: Retrieve transactions for the savings account
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Savings account transactions retrieved successfully
+          schema:
+            $ref: '#/definitions/TransactionsResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /user/profile/transactions/credit-card:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: Get Credit Card Transactions
+      description: Retrieve transactions for the credit card
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Credit card transactions retrieved successfully
+          schema:
+            $ref: '#/definitions/TransactionsResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error                     
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -164,3 +328,63 @@ definitions:
         type: string
       lastName:
         type: string
+      accounts:
+        type: array
+        items:
+          type: object
+          properties:
+            type:
+              $ref: '#/definitions/AccountType'
+            accountId:
+              type: string 
+  TransactionDetails:
+    type: object
+    properties:
+      transactionId:
+        type: string
+      type:
+        type: string
+        description: Type of transaction (read-only)
+      category:
+        type: string
+        description: Category of the transaction
+        enum: ['category1', 'category2', 'category3']
+      notes:
+        type: string
+        description: Notes for the transaction
+      amount:
+        type: number
+        description: Amount of the transaction
+      date:
+        type: string
+        format: date
+        description: Date of the transaction
+  TransactionsResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: array
+        items:
+          $ref: '#/definitions/TransactionDetails'
+  TransactionDetailsResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        $ref: '#/definitions/TransactionDetails'
+  AccountType:
+    type: string
+    enum: 
+      - 'checking'
+      - 'savings'
+      - 'credit-card'
+      - 'new-account-type' 
+   
+      

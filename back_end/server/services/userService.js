@@ -63,7 +63,6 @@ module.exports.loginUser = async serviceData => {
       process.env.SECRET_KEY || 'default-secret-key',
       { expiresIn: '1d' }
     )
-
     return { token }
   } catch (error) {
     console.error('Error in userService.js', error)
