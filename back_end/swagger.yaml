@@ -342,9 +342,23 @@ definitions:
     properties:
       transactionId:
         type: string
-      type:
+      date:
         type: string
-        description: Type of transaction (read-only)
+        format: date
+        description: Date of the transaction   
+      transactionLabel:
+        type: string
+        description: Label of the transaction
+      amount:
+        type: number
+        description: Amount of the transaction  
+      balance:
+        type: number
+        description: Total account balance after the transaction  
+      transactionType:
+        type: string
+        description: 'Type of the transaction (read-only)'
+        description: 'electronic' 
       category:
         type: string
         description: Category of the transaction
@@ -352,13 +366,8 @@ definitions:
       notes:
         type: string
         description: Notes for the transaction
-      amount:
-        type: number
-        description: Amount of the transaction
-      date:
-        type: string
-        format: date
-        description: Date of the transaction
+      
+      
   TransactionsResponse:
     type: object
     properties:
