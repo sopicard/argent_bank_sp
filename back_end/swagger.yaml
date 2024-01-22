@@ -33,6 +33,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
   /user/signup:
     post:
       tags:
@@ -57,6 +58,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
   /user/profile:
     post:
       security:
@@ -75,19 +77,20 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
-            $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/UserProfileResponse'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
     put:
       security:
         - Bearer: []
       tags:
         - User Module
-      summary: User Profile API
+      summary: Update User Profile API
       description: API for updating a user profile
       parameters:
         - in: header
@@ -100,26 +103,64 @@ paths:
           description: Update user profile attributes
           required: true
           schema:
-            $ref: '#/definitions/UserProfile'
+            $ref: '#/definitions/UserUpdatePayload'
       produces:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile updated successfully
           schema:
-            $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/UserUpdateResponse'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /transactions:
+
+  /user/profile/account/{id}/{accountType}:
     get:
       security:
         - Bearer: []
       tags:
-        - Transaction Module
-      summary: Retrieve all transactions
-      description: Returns all transactions for the authenticated user or a specific account
+        - User Module
+      summary: Get Account Details
+      description: Retrieve details of a specific user account
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: path
+          name: id
+          description: ID of the account to retrieve
+          required: true
+          type: string
+        - in: path
+          name: accountType
+          description: Type of the account
+          required: true
+          type: string
+          enum:
+            - 'checking'
+            - 'savings'
+            - 'credit-card'
+            - 'new-account-type'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Account details retrieved successfully
+          schema:
+            $ref: '#/definitions/AccountDetailsResponse'  
+
+  /user/profile/transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: Get User Transactions
+      description: Retrieve transactions for the user's profile
       parameters:
         - in: header
           name: Authorization
@@ -132,11 +173,6 @@ paths:
           required: false
           type: string
         - in: query
-          name: orderBy
-          description: Optional order of transactions (e.g., 'desc' for antichronological)
-          required: false
-          type: string
-        - in: query
           name: startDate
           description: Optional start date for filtering transactions
           required: false
@@ -146,16 +182,6 @@ paths:
           description: Optional end date for filtering transactions
           required: false
           type: string
-        - in: query
-          name: month
-          description: Optional month for filtering transactions
-          required: false
-          type: string
-        - in: query
-          name: label
-          description: Optional label for filtering transactions
-          required: false
-          type: string  
       produces:
         - application/json
       responses:
@@ -163,16 +189,13 @@ paths:
           description: Transactions retrieved successfully
           schema:
             $ref: '#/definitions/TransactionsResponse'
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error 
-  /transactions/{transactionId}:
+
+  /user/profile/transactions/{transactionId}:
     get:
       security:
         - Bearer: []
       tags:
-        - Transaction Module
+        - User Module
       summary: Get Transaction Details
       description: Retrieve details of a specific transaction
       parameters:
@@ -192,116 +215,84 @@ paths:
         '200':
           description: Transaction details retrieved successfully
           schema:
-            $ref: '#/definitions/TransactionDetailsResponse'
+            $ref: '#/definitions/TransactionDetails'
         '401':
           description: Unauthorized
         '404':
           description: Transaction not found
         '500':
-          description: Internal Server Error  
-  /user/profile/transactions/checking:
-    get:
+          description: Internal Server Error 
+    put:
       security:
         - Bearer: []
       tags:
         - User Module
-      summary: Get Checking Account Transactions
-      description: Retrieve transactions for the checking account
+      summary: Update Transaction
+      description: Update details of a specific transaction
       parameters:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
           required: true
           type: string
+        - in: path
+          name: transactionId
+          description: ID of the transaction to update
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Update details of the transaction
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateTransactionPayload'
       produces:
         - application/json
       responses:
         '200':
-          description: Checking account transactions retrieved successfully
+          description: Transaction updated successfully
           schema:
-            $ref: '#/definitions/TransactionsResponse'
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
         '401':
           description: Unauthorized
+        '404':
+          description: Transaction not found
         '500':
           description: Internal Server Error
-  /user/profile/transactions/savings:
-    get:
-      security:
-        - Bearer: []
-      tags:
-        - User Module
-      summary: Get Savings Account Transactions
-      description: Retrieve transactions for the savings account
-      parameters:
-        - in: header
-          name: Authorization
-          description: Attach Bearer JWT token
-          required: true
-          type: string
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Savings account transactions retrieved successfully
-          schema:
-            $ref: '#/definitions/TransactionsResponse'
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
-  /user/profile/transactions/credit-card:
-    get:
-      security:
-        - Bearer: []
-      tags:
-        - User Module
-      summary: Get Credit Card Transactions
-      description: Retrieve transactions for the credit card
-      parameters:
-        - in: header
-          name: Authorization
-          description: Attach Bearer JWT token
-          required: true
-          type: string
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Credit card transactions retrieved successfully
-          schema:
-            $ref: '#/definitions/TransactionsResponse'
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error                     
+
 securityDefinitions:
   Bearer:
     type: apiKey
     name: Authorization
     in: header
+
 definitions:
   User:
     properties:
       email:
         type: string
-        description: user email
+        description: User email
       password:
         type: string
-        description: user password
+        description: User password
       firstName:
         type: string
-        description: user first name
+        description: User first name
       lastName:
         type: string
-        description: user last name
+        description: User last name
+
   Login:
     properties:
       email:
         type: string
-        description: user email
+        description: User email
       password:
         type: string
-        description: user password
+        description: User password
+
   ApiResponse:
     type: object
     properties:
@@ -316,58 +307,79 @@ definitions:
             type: string
           email:
             type: string
+
   LoginResponse:
     type: object
     properties:
       token:
         type: string
-  UserProfile:
+
+  UserProfileResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          firstName:
+            type: string
+          lastName:
+            type: string
+          accounts:
+            type: array
+            items:
+              $ref: '#/definitions/AccountType'
+
+  UserUpdatePayload:
     type: object
     properties:
       firstName:
         type: string
       lastName:
         type: string
-      accounts:
-        type: array
-        items:
-          type: object
-          properties:
-            type:
-              $ref: '#/definitions/AccountType'
-            accountId:
-              type: string 
-  TransactionDetails:
+      password:
+        type: string
+
+  UserUpdateResponse:
     type: object
     properties:
-      transactionId:
+      status:
+        type: integer
+      message:
         type: string
-      date:
+      body:
+        $ref: '#/definitions/UserProfileResponse'
+
+  AccountDetailsResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
         type: string
-        format: date
-        description: Date of the transaction   
-      transactionLabel:
-        type: string
-        description: Label of the transaction
-      amount:
-        type: number
-        description: Amount of the transaction  
-      balance:
-        type: number
-        description: Total account balance after the transaction  
-      transactionType:
-        type: string
-        description: 'Type of the transaction (read-only)'
-        description: 'electronic' 
-      category:
-        type: string
-        description: Category of the transaction
-        enum: ['category1', 'category2', 'category3']
-      notes:
-        type: string
-        description: Notes for the transaction
-      
-      
+      body:
+        type: object
+        properties:
+          firstName:
+            type: string
+          lastName:
+            type: string
+          accounts:
+            type: array
+            items:
+              $ref: '#/definitions/AccountType'
+  
+  AccountType:
+    type: string
+    enum:
+      - 'checking'
+      - 'savings'
+      - 'credit-card'
+      - 'new-account-type'            
+
   TransactionsResponse:
     type: object
     properties:
@@ -379,21 +391,43 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/TransactionDetails'
-  TransactionDetailsResponse:
+
+  TransactionDetails:
     type: object
     properties:
-      status:
-        type: integer
-      message:
+      transactionId:
         type: string
-      body:
-        $ref: '#/definitions/TransactionDetails'
-  AccountType:
-    type: string
-    enum: 
-      - 'checking'
-      - 'savings'
-      - 'credit-card'
-      - 'new-account-type' 
-   
-      
+      date:
+        type: string
+        format: date
+        description: Date of the transaction
+      transactionLabel:
+        type: string
+        description: Label of the transaction
+      amount:
+        type: number
+        description: Amount of the transaction
+      balance:
+        type: number
+        description: Total account balance after the transaction
+      transactionType:
+        type: string
+        description: 'Type of the transaction (read-only). Expected value: electronic'
+      category:
+        type: string
+        description: Category of the transaction
+        enum: ['category1', 'category2', 'category3']
+      notes:
+        type: string
+        description: Notes for the transaction
+
+  UpdateTransactionPayload:
+    type: object
+    properties:
+      category:
+        type: string
+        description: Updated category for the transaction
+      notes:
+        type: string
+        description: Updated notes for the transaction    
+

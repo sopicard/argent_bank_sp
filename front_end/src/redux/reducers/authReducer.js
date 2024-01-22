@@ -1,5 +1,6 @@
 import * as types from '../types'
 
+// Etat initial
 const initialState = {
   username: '',  
   password: '',
