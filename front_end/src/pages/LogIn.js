@@ -1,6 +1,6 @@
-import  { React, useEffect }from 'react'
+import React, { useEffect, useState }from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUser, updateUsername, updatePassword, updateRememberMe } from '../redux/actions/authActions'
+import { loginUser, updateUsername } from '../redux/actions/authActions'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -9,9 +9,14 @@ const LogIn = () => {
   // Initialisation du dispatch pour les actions Redux et la navigation
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  // Utilisation de useState pour gérer localement les champs password et rememberMe
+  const [password, setPassword] = useState('')
+  const [rememberMe, setRememberMe] = useState(false)
+
   // Récupération des données du store Redux
-  const { username, password, token, error, rememberMe } = useSelector((state) => state.auth)
-  
+  const { username, token, error } = useSelector((state) => state.auth)
+
   // Fonction pour gérer la soumission du formulaire de connexion
   const handleSignIn = async (e) => {
     e.preventDefault()
@@ -42,7 +47,9 @@ const LogIn = () => {
   useEffect(() => {
     if (error || !token) {
       dispatch(updateUsername(''))
-      dispatch(updatePassword(''))
+      // Réinitialise le mot de passe et rememberMe localement
+      setPassword('') 
+      setRememberMe(false)
     }
   }, [error, token, dispatch])
 
@@ -70,12 +77,17 @@ const LogIn = () => {
                 type='password'
                 id='password'
                 value={password}
-                onChange={(e) => dispatch(updatePassword(e.target.value))}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className='input-remember'>
-              {/* Utilise l'état RememberMe du store Redux pour contrôler la case à cocher */}
-              <input type='checkbox' id='remember-me' checked={rememberMe} onChange={() => dispatch(updateRememberMe(!rememberMe))} />
+              {/* Utilise l'état RememberMe pour contrôler la case à cocher */}
+              <input
+                type='checkbox'
+                id='remember-me'
+                checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)}
+              />
               <label htmlFor='remember-me'>Remember me</label>
             </div>
             <button type='submit' className='sign-in-button'>Sign In</button>

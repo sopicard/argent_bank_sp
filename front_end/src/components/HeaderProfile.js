@@ -14,7 +14,7 @@ const HeaderProfile = () => {
     dispatch(logoutUser())
 
     // Redirige l'utilisateur vers la page de connexion après la déconnexion
-    navigate('/login')
+    navigate('/')
   };
 
   return (

@@ -4,11 +4,10 @@ import * as types from '../types'
 
 export const loginRequest = () => ({ type: types.LOGIN_REQUEST })
 export const updateUsername = (username) => ({ type: types.UPDATE_USERNAME, payload: { username } })
-export const updatePassword = (password) => ({ type: types.UPDATE_PASSWORD, payload: { password } })
 export const loginSuccess = (token) => ({ type: types.LOGIN_SUCCESS, payload: { token } })
 export const loginFailure = (error) => ({ type: types.LOGIN_FAILURE, payload: { error } })
 export const updateToken = (token) => ({ type: types.UPDATE_TOKEN, payload: { token } })
-export const updateRememberMe = (rememberMe) => ({ type: types.UPDATE_REMEMBER_ME, payload: {rememberMe} })
+
 export const loginUser = (username, password, rememberMe) => async (dispatch) => {
   try {
     dispatch(loginRequest())
@@ -26,8 +25,8 @@ export const loginUser = (username, password, rememberMe) => async (dispatch) =>
       const { token } = data.body
 
       console.log('Token retrieved:', token)
-
       console.log('Checking rememberMe:', rememberMe)
+
       // Stocke le token dans le localStorage si "Remember me" est coché
       if (rememberMe) {
         console.log('Adding token to localStorage:', token)
@@ -87,7 +86,6 @@ export const updateUserProfile = (updatedUserData) => async (dispatch, getState)
 
       if (!response.ok) {
         console.error('Error updating user profile on the server')
-        // Gérez l'erreur côté frontend si nécessaire
       }
     }
 
@@ -98,6 +96,5 @@ export const updateUserProfile = (updatedUserData) => async (dispatch, getState)
     })
   } catch (error) {
     console.error('Error updating user profile:', error)
-    // Gérez l'erreur côté frontend si nécessaire
   }
-};
+}
