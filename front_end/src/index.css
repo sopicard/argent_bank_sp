@@ -71,7 +71,7 @@ html {
   .main-nav-item:hover {
     text-decoration: underline;
   }
-  
+
   .main-nav-logo {
     display: flex;
     align-items: center;

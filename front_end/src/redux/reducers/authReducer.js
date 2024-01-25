@@ -1,8 +1,7 @@
 import * as types from '../types'
 
 // Etat initial
-const initialState = {
-  username: '',  
+const initialState = {  
   token: null,
   error: null,
   userData: null,
@@ -10,14 +9,12 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.UPDATE_USERNAME:
-      return { ...state, username: action.payload.username }
     case types.LOGIN_REQUEST:
-      return { ...state, loading: true, error: null }
+      return { ...state, error: null }
     case types.LOGIN_SUCCESS:
-      return { ...state, loading: false, token: action.payload.token, error: null }
+      return { ...state, token: action.payload.token, error: null }
     case types.LOGIN_FAILURE:
-      return { ...state, loading: false, error: action.payload.error }
+      return { ...state, error: action.payload.error }
     case types.UPDATE_USER_PROFILE:
       return { ...state, userData: action.payload.userData }
     case types.UPDATE_TOKEN:

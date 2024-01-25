@@ -1,6 +1,6 @@
 import React, { useEffect, useState }from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUser, updateUsername } from '../redux/actions/authActions'
+import { loginUser } from '../redux/actions/authActions'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -10,12 +10,13 @@ const LogIn = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  // Utilisation de useState pour gérer localement les champs password et rememberMe
+  // Utilisation de useState pour gérer localement les champs username, password et rememberMe
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [rememberMe, setRememberMe] = useState(false)
 
   // Récupération des données du store Redux
-  const { username, token, error } = useSelector((state) => state.auth)
+  const { token, error } = useSelector((state) => state.auth)
 
   // Fonction pour gérer la soumission du formulaire de connexion
   const handleSignIn = async (e) => {
@@ -46,8 +47,8 @@ const LogIn = () => {
   // Effet qui nettoie les champs du formulaire en cas d'erreur ou de déconnexion
   useEffect(() => {
     if (error || !token) {
-      dispatch(updateUsername(''))
-      // Réinitialise le mot de passe et rememberMe localement
+      // Réinitialise l'email, le mot de passe et rememberMe localement
+      setUsername('')
       setPassword('') 
       setRememberMe(false)
     }
@@ -68,7 +69,7 @@ const LogIn = () => {
                 type='text'
                 id='username'
                 value={username}
-                onChange={(e) => dispatch(updateUsername(e.target.value))}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div className='input-wrapper'>
