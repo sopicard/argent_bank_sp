@@ -178,9 +178,9 @@ paths:
         '200':
           description: Transactions retrieved successfully
           schema:
-            $ref: '#/definitions/TransactionsResponse'
+            $ref: '#/definitions/TransactionResponse'
 
-  /user/transactions/{id}:
+  /user/transaction/{id}:
     get:
       security:
         - Bearer: []
@@ -352,7 +352,7 @@ definitions:
       availableBalance:
         type: number    
 
-  TransactionsResponse:
+  TransactionResponse:
     type: object
     properties:
       status:
