@@ -116,7 +116,31 @@ paths:
         '500':
           description: Internal Server Error
 
-  /user/accounts/{id}:
+  /user/accounts:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: Get All User Accounts
+      description: Retrieve all accounts belonging to the user
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Accounts retrieved successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AccountsResponse'
+
+  /user/accounts/{accountId}:
     get:
       security:
         - Bearer: []
@@ -131,7 +155,7 @@ paths:
           required: true
           type: string
         - in: path
-          name: id
+          name: accountId
           description: ID of the account to retrieve
           required: true
           type: string
@@ -141,9 +165,9 @@ paths:
         '200':
           description: Account details retrieved successfully
           schema:
-            $ref: '#/definitions/AccountsResponse'  
+            $ref: '#/definitions/AccountDetailsResponse'
 
-  /user/accounts/{id}/transactions:
+  /user/accounts/{accountId}/transactions:
     get:
       security:
         - Bearer: []
@@ -158,7 +182,7 @@ paths:
           required: true
           type: string
         - in: path
-          name: id
+          name: accountId
           description: ID of the account to retrieve transactions
           required: true
           type: string  
@@ -178,9 +202,9 @@ paths:
         '200':
           description: Transactions retrieved successfully
           schema:
-            $ref: '#/definitions/TransactionResponse'
+            $ref: '#/definitions/TransactionsListResponse'
 
-  /user/transaction/{id}:
+  /user/accounts/{accountId}/transactions/{transactionId}:
     get:
       security:
         - Bearer: []
@@ -195,7 +219,12 @@ paths:
           required: true
           type: string
         - in: path
-          name: id
+          name: accountId
+          description: ID of the account containing the transaction
+          required: true
+          type: string
+        - in: path
+          name: transactionId
           description: ID of the transaction to retrieve
           required: true
           type: string
@@ -205,7 +234,7 @@ paths:
         '200':
           description: Transaction details retrieved successfully
           schema:
-            $ref: '#/definitions/TransactionItems'
+            $ref: '#/definitions/TransactionResponse'
         '401':
           description: Unauthorized
         '404':
@@ -226,7 +255,12 @@ paths:
           required: true
           type: string
         - in: path
-          name: id
+          name: accountId
+          description: ID of the account containing the transaction
+          required: true
+          type: string
+        - in: path
+          name: transactionId
           description: ID of the transaction to update
           required: true
           type: string
@@ -350,9 +384,19 @@ definitions:
           - 'credit-card'
           - 'new-account-type'
       availableBalance:
-        type: number    
+        type: number   
+        
+  AccountDetailsResponse:
+    type: object
+    properties:
+      accountId:
+        type: string
+      accountType:
+        type: string
+      availableBalance:
+        type: number      
 
-  TransactionResponse:
+  TransactionsListResponse:
     type: object
     properties:
       status:
@@ -362,9 +406,22 @@ definitions:
       body:
         type: array
         items:
-          $ref: '#/definitions/TransactionItems'
-          
-  TransactionItems:
+          $ref: '#/definitions/TransactionResponse'
+      filteredByDate:
+        type: string
+        description: Optional date filter applied to transactions
+
+  TransactionResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        $ref: '#/definitions/TransactionItem'
+        
+  TransactionItem:
     type: object
     properties:
       id:
@@ -407,5 +464,8 @@ definitions:
         description: Updated category for the transaction
       notes:
         type: string
-        description: Updated notes for the transaction    
+        description: Updated notes for the transaction
+
+
+
 
